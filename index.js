@@ -75,10 +75,7 @@ if(type === 'suning') {
                         fs.writeFileSync(path.join(intro_dir, filename), res.data, 'binary');
                     });
             })
-        }).then(() => {
-        console.log('抓取完成');
-        process.exit(0);
-    });
+        });
 }
 
 if(type === 'jd') {
@@ -131,10 +128,7 @@ if(type === 'jd') {
                             });
                     });
                 });
-        }).then(() => {
-        console.log('抓取完成');
-        process.exit(0);
-    });
+        });
 }
 
 if(type === 'tmall') {
@@ -201,8 +195,5 @@ if(type === 'tmall') {
                             });
                     });
                 })
-        }).then(() => {
-        console.log('抓取完成');
-        process.exit(0);
-    });
+        });
 }
