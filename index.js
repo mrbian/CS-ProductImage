@@ -10,7 +10,7 @@ let down_request = axios.create({
     responseType: 'arraybuffer'
 });
 
-let url = fs.readFileSync(path.join('.', 'url.txt'), 'utf8');
+let url = fs.readFileSync(path.join('.', '网址.txt'), 'utf8');
 let type;
 if (/jd\.com/gi.exec(url)) {
     type = 'jd';
@@ -75,7 +75,10 @@ if(type === 'suning') {
                         fs.writeFileSync(path.join(intro_dir, filename), res.data, 'binary');
                     });
             })
-        });
+        }).then(() => {
+        console.log('抓取完成');
+        process.exit(0);
+    });
 }
 
 if(type === 'jd') {
@@ -113,7 +116,7 @@ if(type === 'jd') {
             if(!fs.existsSync(intro_dir))
                 fs.mkdirSync(intro_dir);
             await axios
-                .get(`https://wqsitem.jd.com/detail/${p_id}_d13802842016_normal.html`)
+                .get(`https://wqsitem.jd.com/detail/0_d${p_id}_normal.html`)
                 .then(res => {
                     let intros = res.data.match(/\/\/img30\.360buyimg\.com\/[0-9a-zA-Z\/]*\.jpg/gi);
                     intros = intros.map((ele, idx) => {
@@ -128,7 +131,10 @@ if(type === 'jd') {
                             });
                     });
                 });
-        })
+        }).then(() => {
+        console.log('抓取完成');
+        process.exit(0);
+    });
 }
 
 if(type === 'tmall') {
@@ -181,7 +187,6 @@ if(type === 'tmall') {
             let result_text = iconv.decode(res.data, 'GBK');
             let intro_url = result_text.match(/descnew.taobao.com[a-z0-9A-Z%\/_.]*/gi);
             intro_url = "https://" + intro_url;
-            console.log(intro_url)
             await tmall_request
                 .get(intro_url)
                 .then((res) => {
@@ -196,5 +201,8 @@ if(type === 'tmall') {
                             });
                     });
                 })
-        });
+        }).then(() => {
+        console.log('抓取完成');
+        process.exit(0);
+    });
 }
