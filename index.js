@@ -67,12 +67,18 @@ if(type === 'suning') {
                 .forEach((ele, idx) => {
                     intros.push(ele.getAttribute('src2'));
                 });
+            intros = intros
+                .map((ele, idx) => {
+                    return 'http:' + ele;
+                });
             intros.forEach(async function(src, idx) {
                 let filename = (idx).toString() + '.jpg';
                 await down_request
                     .get(src)
                     .then((res) => {
                         fs.writeFileSync(path.join(intro_dir, filename), res.data, 'binary');
+                    }).catch((err) => {
+
                     });
             })
         });
@@ -125,6 +131,8 @@ if(type === 'jd') {
                             .get(src)
                             .then((res) => {
                                 fs.writeFileSync(path.join(intro_dir, filename), res.data, 'binary');
+                            }).catch((err) => {
+
                             });
                     });
                 });
@@ -186,12 +194,15 @@ if(type === 'tmall') {
                 .then((res) => {
                     let r_text = iconv.decode(res.data, 'utf8');
                     let intros = r_text.match(/https:\/\/img\.alicdn\.com[a-z0-9A-Z\/!._]*\.jpg/gi);
+                    console.log(intros);
                     intros.forEach(async function(src, idx) {
                         let filename = (idx).toString() + '.jpg';
                         await down_request
                             .get(src)
                             .then((res) => {
                                 fs.writeFileSync(path.join(intro_dir, filename), res.data, 'binary');
+                            }).catch((err) => {         // 防止有404的出现
+
                             });
                     });
                 })
