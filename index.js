@@ -69,7 +69,11 @@ if(type === 'suning') {
                 });
             intros = intros
                 .map((ele, idx) => {
-                    return 'http:' + ele;
+                    if(/http/gi.test(ele)) {
+                        return ele;
+                    } else {
+                        return 'http:' + ele;
+                    }
                 });
             intros.forEach(async function(src, idx) {
                 let filename = (idx).toString() + '.jpg';
@@ -123,7 +127,11 @@ if(type === 'jd') {
                 .then(res => {
                     let intros = res.data.match(/\/\/img30\.360buyimg\.com\/[0-9a-zA-Z\/]*\.jpg/gi);
                     intros = intros.map((ele, idx) => {
-                        return 'http:' + ele;
+                        if(/http/gi.test(ele)) {
+                            return ele;
+                        } else {
+                            return 'http:' + ele;
+                        }
                     });
                     intros.forEach(async function(src, idx) {
                         let filename = (idx).toString() + '.jpg';
@@ -194,7 +202,6 @@ if(type === 'tmall') {
                 .then((res) => {
                     let r_text = iconv.decode(res.data, 'utf8');
                     let intros = r_text.match(/https:\/\/img\.alicdn\.com[a-z0-9A-Z\/!._]*\.jpg/gi);
-                    console.log(intros);
                     intros.forEach(async function(src, idx) {
                         let filename = (idx).toString() + '.jpg';
                         await down_request
