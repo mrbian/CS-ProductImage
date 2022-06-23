@@ -12,6 +12,6 @@
   "dependencies": {
     "axios": "^0.19.2",
     "iconv-lite": "^0.5.1",
-    "jsdom": "^16.1.0"
+    "jsdom": "^16.5.0"
   }
 }
